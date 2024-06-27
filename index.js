@@ -33,7 +33,7 @@ app.get("/api/:date?", (req, res) => {
   // Based on date param to process date object
   if(!dateParam)
     dateObject = new Date();
-  else if(/^-?\d+/.test(dateParam))
+  else if(/^-?\d+$/.test(dateParam))
     dateObject = new Date(parseInt(dateParam));
   else dateObject = new Date(dateParam);
 
