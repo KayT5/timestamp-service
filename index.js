@@ -24,7 +24,25 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+// Date API
+app.get("/api/:date?", (req, res) => {
+  // Extract date param and init date object
+  const dateParam = req.params.date;
+  let dateObject;
 
+  // Based on date param to process date object
+  if(!dateParam)
+    dateObject = new Date();
+  else if(/^-?\d+/.test(dateParam))
+    dateObject = new Date(parseInt(dateParam));
+  else dateObject = new Date(dateParam);
+
+  // Response based on date object
+  if(isNaN(dateObject))
+    return res.json({error : 'Invalid Date'});
+  else
+    return res.json({unix: dateObject.getTime(), utc: dateObject.toUTCString()});
+})
 
 // Listen on port set in environment variable or default to 3000
 var listener = app.listen(process.env.PORT || 3000, function () {
